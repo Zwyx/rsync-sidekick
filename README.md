@@ -20,20 +20,20 @@ This propagates following changes from _source directory_ to _destination direct
 
 Note:
 
-* This tool **does not delete** any files or folders (under any circumstances) -- that's why safe-to-use 😌
-    * Your files are just _moved around_
-    * Now, if you're uncomfortable with this tool even moving your files around, there is a `-shellscript` option, that
-      just generates a script for you to read and run (think of it like a `--dry-run` option)
-* This tool **does not** actually **transfer** files -- that's for `rsync` to do 🙂
-* Since you'd run `rsync` after this tool is run, any changes that this tool couldn't propagate would just be propagated
+- This tool **does not delete** any files or folders (under any circumstances) -- that's why safe-to-use 😌
+  - Your files are just _moved around_
+  - Now, if you're uncomfortable with this tool even moving your files around, there is a `-shellscript` option, that
+    just generates a script for you to read and run (think of it like a `--dry-run` option)
+- This tool **does not** actually **transfer** files -- that's for `rsync` to do 🙂
+- Since you'd run `rsync` after this tool is run, any changes that this tool couldn't propagate would just be propagated
   by `rsync`
-    * So the most that you might lose is some time with `rsync` doing more work than it could have -- Which is likely
-      still much less than not using this tool at all 😄
+  - So the most that you might lose is some time with `rsync` doing more work than it could have -- Which is likely
+    still much less than not using this tool at all 😄
 
 ## How to install?
 
 1. Install Go version at least **1.17**
-    * See: [Go installation instructions](https://go.dev/doc/install)
+   - See: [Go installation instructions](https://go.dev/doc/install)
 2. Run command:
    ```bash
    go install github.com/m-manu/rsync-sidekick@latest
@@ -59,7 +59,7 @@ Run `rsync` as you would normally do:
 
 ```bash
 # (note the trailing slashes -- without them, rsync's behavior is different)
-rsync -av /Users/manu/Photos/ /Volumes/Portable/Photos/ 
+rsync -av /Users/manu/Photos/ /Volumes/Portable/Photos/
 ```
 
 ## Command line options
@@ -92,6 +92,11 @@ docker run --rm -v /Users/manu:/mnt/homedir manumk/rsync-sidekick rsync-sidekick
 # Then run rsync: (note the trailing slashes -- without them, rsync's behavior is different)
 docker run --rm -v /Users/manu:/mnt/homedir manumk/rsync-sidekick rsync /mnt/homedir/Photos/ /mnt/homedir/Photos_backup/
 ```
+
+### Build the Docker container
+
+- Build: `docker build -t rsync-sidekick .`
+- Run: `docker run --rm -v /...:/sync:ro rsync-sidekick /bin/bash -c "rsync-sidekick -shellscript /.../ /.../ && echo && cat sync_actions_*.sh"`
 
 ## FAQs
 
